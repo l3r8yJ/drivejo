@@ -1,25 +1,43 @@
 package org.l3r8y.benchmark;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.l3r8y.process.SleepProcess;
 
+import java.lang.reflect.Executable;
+import java.time.Duration;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class DefaultBenchmarkTest {
-
+    private DefaultBenchmark benchmark;
     @BeforeEach
     void setUp() {
-    }
-
-    @AfterEach
-    void tearDown() {
-    }
-
-    @Test
-    void log() {
+        this.benchmark = new DefaultBenchmark(
+            new SleepProcess()
+        );
     }
 
     @Test
-    void bench() {
+    void throwsExceptionWhenLogWithoutBench() {
+        assertThrows(
+            IllegalStateException.class,
+            () -> {
+                this.benchmark.log();
+            }
+        );
+    }
+
+    @Test
+    void sleepBenchOn2_5Seconds() {
+        assertTimeoutPreemptively(
+            Duration.ofMillis(2600),
+            () -> {
+                this.benchmark.bench();
+            }
+        ,
+            "sleepBenchOn2_5Seconds passed"
+        );
+        this.benchmark.log();
     }
 }

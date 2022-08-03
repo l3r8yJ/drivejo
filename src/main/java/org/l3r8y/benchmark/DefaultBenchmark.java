@@ -1,5 +1,7 @@
 package org.l3r8y.benchmark;
 
+import com.jcabi.log.Logger;
+import org.cactoos.text.FormattedText;
 import org.l3r8y.process.BenchProcess;
 import java.time.Duration;
 import java.time.Instant;
@@ -9,11 +11,11 @@ import java.util.Objects;
  * The type Default benchmark.
  */
 public class DefaultBenchmark implements Benchmark {
-    long time = -1;
+    private long time = -1;
     /**
      * The Process.
      */
-    final BenchProcess process;
+    private final BenchProcess process;
 
     /**
      * Instantiates a new Default benchmark.
@@ -29,10 +31,21 @@ public class DefaultBenchmark implements Benchmark {
 
     @Override
     public void log() {
-        if (Objects.equals(-1, this.time)) {
+        if (-1 == this.time) {
             throw new IllegalStateException("Cannot create log before benchmark execution!");
         }
-        // FIXME: 03.08.2022 implement logger
+        try {
+            Logger.info(
+                this,
+                new FormattedText(
+                    "%s process finished for %d seconds.",
+                    this.getClass().getName(),
+                    this.time
+                ).asString()
+            );
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
         System.out.println(this.time);
     }
 
