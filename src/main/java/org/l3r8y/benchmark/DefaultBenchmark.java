@@ -1,12 +1,8 @@
 package org.l3r8y.benchmark;
 
-import com.jcabi.log.Logger;
 import org.cactoos.text.FormattedText;
 import org.l3r8y.process.BenchProcess;
 import org.slf4j.LoggerFactory;
-import org.slf4j.Marker;
-import org.slf4j.helpers.MarkerIgnoringBase;
-import org.slf4j.helpers.NOPLogger;
 
 import java.time.Duration;
 import java.time.Instant;
